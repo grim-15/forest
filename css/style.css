@@ -1,6 +1,6 @@
-/* --- Image de fond de la page d’accueil --- */
+/* --- Image de fond de la page d'accueil --- */
 .forest-bg {
-  background-image: url("Green and Brown Illustration Fun Forest Presentation.png");
+  background-image: url("../assets/images/presentation.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

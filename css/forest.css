@@ -1,6 +1,6 @@
-/* --- Image de fond de la page d’accueil --- */
+/* --- Image de fond de la page d'accueil --- */
 .forest-bg {
-  background-image: url("forest\ bg.jpg");
+  background-image: url("../assets/images/forest-bg.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
