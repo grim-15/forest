@@ -1,0 +1,23 @@
+/* --- Image de fond de la page d’accueil --- */
+.forest-bg {
+  background-image: url("Green and Brown Illustration Fun Forest Presentation.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* --- Bouton Explorer --- */
+.btn-explorer {
+  padding: 16px 32px;
+  background-color: #2d8a47;
+  color: white;
+  font-weight: bold;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: 0.2s ease;
+}
+
+.btn-explorer:hover {
+  background-color: #256f39;
+  transform: scale(1.05);
+}
