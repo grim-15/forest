@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maison des Elfes - Forest Academy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/forest.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .full-page-image {
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+    .content-overlay {
+      position: relative;
+      z-index: 10;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .text-content {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 20px 25px;
+      border-radius: 15px;
+      max-width: 800px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #333;
+      min-height: 200px;
+      max-height: 85vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .navigation-buttons {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+    .nav-btn {
+      padding: 10px 20px;
+      background-color: #2d8a47;
+      color: white;
+      font-weight: bold;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: 0.2s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .nav-btn:hover:not(:disabled) {
+      background-color: #256f39;
+      transform: scale(1.05);
+    }
+    .nav-btn:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+    .hidden {
+      display: none;
+    }
+    .character-name {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #2d8a47;
+      margin-bottom: 10px;
+    }
+    .practice-card {
+      padding: 12px;
+      background: #fff;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      cursor: move;
+      transition: all 0.3s;
+      font-size: 0.9rem;
+      line-height: 1.3;
+    }
+    .practice-card:hover {
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transform: translateY(-2px);
+    }
+    .practice-card.dragging {
+      opacity: 0.5;
+    }
+    .category-box {
+      padding: 15px;
+      border: 2px dashed #ddd;
+      border-radius: 10px;
+      min-height: 100px;
+      background: #f9f9f9;
+      margin-bottom: 10px;
+    }
+    .category-box.drag-over {
+      border-color: #2d8a47;
+      background: #e8f5e9;
+    }
+    .category-box.good {
+      border-color: #2d8a47;
+      background: #e8f5e9;
+    }
+    .category-box.bad {
+      border-color: #d32f2f;
+      background: #ffebee;
+    }
+  </style>
+</head>
+<body>
+  <img src="assets/images/elf-text.png" alt="Maison des Elfes" class="full-page-image">
+  
+  <div class="content-overlay">
+    <!-- Partie 1 : Introduction -->
+    <div id="part-1" class="text-content">
+      <div class="character-name">🧝‍♀️ Responsabilis, l'elfe du numérique responsable</div>
+      <p>« Bienvenue dans ma forêt connectée ! Je suis Responsabilis, l'elfe du numérique responsable 🧝‍♀️.</p>
+      <p>Ici, nous utilisons le numérique avec sagesse : nous protégeons nos données, respectons les autres, et évitons le gaspillage. »</p>
+    </div>
+
+    <!-- Partie 2 : Impact -->
+    <div id="part-2" class="text-content hidden">
+      <div class="character-name">🌍 L'impact de nos actions</div>
+      <p>« Chaque clic a un impact : sur ta vie privée, sur la planète, sur les autres personnes derrière l'écran.</p>
+      <p>Je vais te montrer des comportements numériques. À toi de dire si ce sont de bonnes pratiques ou de mauvaises pratiques. »</p>
+    </div>
+
+    <!-- Partie 3 : Explication du jeu -->
+    <div id="part-3" class="text-content hidden">
+      <div class="character-name">🎮 Le jeu</div>
+      <p>« Prêt·e ? Observe bien les situations, et classe-les dans la bonne colonne. Et si tu te trompes, je t'expliquerai pourquoi ! »</p>
+    </div>
+
+    <!-- Mini-cours : Sécurité & vie privée -->
+    <div id="part-4" class="text-content hidden">
+      <div class="character-name">🔒 Sécurité & vie privée</div>
+      <p>« Ne jamais partager ses mots de passe, utiliser des mots de passe solides, ne pas cliquer sur n'importe quel lien. »</p>
+    </div>
+
+    <!-- Mini-cours : Respect & bienveillance -->
+    <div id="part-5" class="text-content hidden">
+      <div class="character-name">💚 Respect & bienveillance</div>
+      <p>« Derrière chaque écran, il y a une personne. On reste poli, on ne se moque pas, on ne harcèle pas. »</p>
+    </div>
+
+    <!-- Mini-cours : Sobriété numérique -->
+    <div id="part-6" class="text-content hidden">
+      <div class="character-name">🌱 Sobriété numérique</div>
+      <p>« On limite les pièces jointes lourdes, on nettoie sa boîte mail, on évite le streaming en très haute définition si ce n'est pas nécessaire. »</p>
+    </div>
+
+    <!-- Mini-cours : Temps d'écran -->
+    <div id="part-7" class="text-content hidden">
+      <div class="character-name">⏰ Temps d'écran</div>
+      <p>« Se déconnecter, faire des pauses, c'est bon pour la santé. Le numérique ne doit pas tout remplacer. »</p>
+    </div>
+
+    <!-- Partie 8 : Le jeu de classement -->
+    <div id="part-8" class="text-content hidden" style="max-width: 1000px; max-height: 90vh; overflow-y: auto;">
+      <div class="character-name">🎮 Jeu de classement</div>
+      <div id="game-container" style="margin-top: 10px;">
+        <p style="margin-bottom: 10px; font-size: 0.9rem;">Glisse chaque pratique dans la bonne colonne :</p>
+        
+        <!-- Zone des pratiques -->
+        <div id="practices-area" style="margin-bottom: 15px;">
+          <h3 style="margin-bottom: 8px; color: #2d8a47; font-size: 1rem;">Pratiques à classer :</h3>
+          <div id="practices-list"></div>
+        </div>
+
+        <!-- Catégories -->
+        <div id="categories-area" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+          <div class="category-box good" data-category="bonne_pratique">
+            <h3 style="color: #2d8a47; margin-bottom: 8px; font-size: 1rem;">✅ Bonne pratique</h3>
+            <div class="category-content"></div>
+          </div>
+          <div class="category-box bad" data-category="mauvaise_pratique">
+            <h3 style="color: #d32f2f; margin-bottom: 8px; font-size: 1rem;">❌ Mauvaise pratique</h3>
+            <div class="category-content"></div>
+          </div>
+        </div>
+        
+        <div id="game-feedback" style="margin-top: 10px; font-weight: bold; font-size: 0.9rem;"></div>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="navigation-buttons">
+      <button id="btn-prev" class="nav-btn" onclick="previousPart()" disabled>← Précédent</button>
+      <button id="btn-next" class="nav-btn" onclick="nextPart()">Suivant →</button>
+      <button id="btn-start-game" class="nav-btn hidden" onclick="startGame()">Commencer le jeu</button>
+    </div>
+  </div>
+
+  <a href="foret.html" class="btn-explorer" style="position: fixed; bottom: 20px; right: 20px; z-index: 20;">Retour à la forêt</a>
+
+  <script>
+    let currentPart = 1;
+    const totalParts = 8;
+
+    // Données du jeu
+    const gamePractices = [
+      { "situation": "Utiliser le même mot de passe pour tous ses comptes.", "categorie": "mauvaise_pratique" },
+      { "situation": "Activer un verrouillage par code ou biométrique sur son téléphone.", "categorie": "bonne_pratique" },
+      { "situation": "Se moquer d'un camarade dans un groupe de discussion.", "categorie": "mauvaise_pratique" },
+      { "situation": "Demander l'autorisation avant de publier la photo de quelqu'un.", "categorie": "bonne_pratique" },
+      { "situation": "Télécharger un fichier depuis un site douteux sans vérifier.", "categorie": "mauvaise_pratique" },
+      { "situation": "Mettre régulièrement à jour ses applications et son système.", "categorie": "bonne_pratique" },
+      { "situation": "Laisser son compte ouvert sur un ordinateur partagé.", "categorie": "mauvaise_pratique" },
+      { "situation": "Signaler à un adulte de confiance un message choquant ou un harcèlement en ligne.", "categorie": "bonne_pratique" },
+      { "situation": "Envoyer des pièces jointes très lourdes à tout le monde \"juste au cas où\".", "categorie": "mauvaise_pratique" },
+      { "situation": "Supprimer régulièrement les fichiers inutiles et les mails dont on n'a plus besoin.", "categorie": "bonne_pratique" },
+      { "situation": "Partager son mot de passe avec son meilleur ami.", "categorie": "mauvaise_pratique" },
+      { "situation": "Vérifier l'adresse d'un site (URL) avant de saisir des informations bancaires.", "categorie": "bonne_pratique" }
+    ];
+
+    let currentGamePractices = [];
+    let placedPractices = {};
+
+    function showPart(partNumber) {
+      for (let i = 1; i <= totalParts; i++) {
+        document.getElementById(`part-${i}`).classList.add('hidden');
+      }
+      
+      document.getElementById(`part-${currentPart}`).classList.remove('hidden');
+      
+      document.getElementById('btn-prev').disabled = currentPart === 1;
+      document.getElementById('btn-next').classList.toggle('hidden', currentPart >= totalParts - 1);
+      document.getElementById('btn-start-game').classList.toggle('hidden', currentPart !== totalParts - 1);
+      
+      if (currentPart === totalParts) {
+        initGame();
+      }
+    }
+
+    function nextPart() {
+      if (currentPart < totalParts) {
+        currentPart++;
+        showPart(currentPart);
+      }
+    }
+
+    function previousPart() {
+      if (currentPart > 1) {
+        currentPart--;
+        showPart(currentPart);
+      }
+    }
+
+    function startGame() {
+      currentPart = totalParts;
+      showPart(currentPart);
+    }
+
+    function initGame() {
+      // Sélectionner 8 pratiques au hasard
+      const shuffled = [...gamePractices].sort(() => Math.random() - 0.5);
+      currentGamePractices = shuffled.slice(0, Math.min(8, shuffled.length));
+      placedPractices = {};
+      
+      // Afficher les pratiques
+      const practicesList = document.getElementById('practices-list');
+      practicesList.innerHTML = '';
+      
+      currentGamePractices.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'practice-card';
+        card.textContent = item.situation;
+        card.draggable = true;
+        card.dataset.index = index;
+        card.dataset.correctCategory = item.categorie;
+        
+        card.addEventListener('dragstart', handleDragStart);
+        card.addEventListener('dragend', handleDragEnd);
+        
+        practicesList.appendChild(card);
+      });
+      
+      // Vider les catégories
+      document.querySelectorAll('.category-content').forEach(div => {
+        div.innerHTML = '';
+      });
+      
+      // Configurer les zones de dépôt
+      document.querySelectorAll('.category-box').forEach(box => {
+        box.addEventListener('dragover', handleDragOver);
+        box.addEventListener('drop', handleDrop);
+        box.addEventListener('dragleave', handleDragLeave);
+      });
+      
+      document.getElementById('game-feedback').textContent = '';
+    }
+
+    let draggedElement = null;
+
+    function handleDragStart(e) {
+      draggedElement = this;
+      this.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    }
+
+    function handleDragEnd(e) {
+      this.classList.remove('dragging');
+      document.querySelectorAll('.category-box').forEach(box => {
+        box.classList.remove('drag-over');
+      });
+    }
+
+    function handleDragOver(e) {
+      if (e.preventDefault) {
+        e.preventDefault();
+      }
+      this.classList.add('drag-over');
+      e.dataTransfer.dropEffect = 'move';
+      return false;
+    }
+
+    function handleDragLeave(e) {
+      this.classList.remove('drag-over');
+    }
+
+    function handleDrop(e) {
+      if (e.stopPropagation) {
+        e.stopPropagation();
+      }
+      
+      this.classList.remove('drag-over');
+      
+      if (draggedElement) {
+        const index = parseInt(draggedElement.dataset.index);
+        const correctCategory = draggedElement.dataset.correctCategory;
+        const droppedCategory = this.dataset.category;
+        const categoryContent = this.querySelector('.category-content');
+        
+        // Retirer la carte de sa position actuelle
+        if (placedPractices[index]) {
+          const oldCategory = document.querySelector(`[data-category="${placedPractices[index]}"] .category-content`);
+          oldCategory.removeChild(draggedElement);
+        } else {
+          draggedElement.remove();
+        }
+        
+        // Ajouter à la nouvelle catégorie
+        categoryContent.appendChild(draggedElement);
+        placedPractices[index] = droppedCategory;
+        
+        // Vérifier si c'est correct
+        if (correctCategory === droppedCategory) {
+          draggedElement.style.background = '#90EE90';
+          draggedElement.style.borderColor = '#2d8a47';
+        } else {
+          draggedElement.style.background = '#ffcccc';
+          draggedElement.style.borderColor = '#d32f2f';
+          setTimeout(() => {
+            // Remettre la carte dans la liste des pratiques
+            const practicesList = document.getElementById('practices-list');
+            draggedElement.style.background = '#fff';
+            draggedElement.style.borderColor = '#ddd';
+            practicesList.appendChild(draggedElement);
+            delete placedPractices[index];
+          }, 2000);
+        }
+        
+        // Vérifier si toutes les pratiques sont placées correctement
+        checkGameComplete();
+      }
+      
+      return false;
+    }
+
+    function checkGameComplete() {
+      const allPlaced = Object.keys(placedPractices).length === currentGamePractices.length;
+      if (allPlaced) {
+        const allCorrect = currentGamePractices.every((item, index) => {
+          return placedPractices[index] === item.categorie;
+        });
+        
+        if (allCorrect) {
+          document.getElementById('game-feedback').textContent = '🎉 Félicitations ! Tu as bien classé toutes les pratiques !';
+          document.getElementById('game-feedback').style.color = '#2d8a47';
+        }
+      }
+    }
+
+    // Initialisation
+    showPart(1);
+  </script>
+</body>
+</html>

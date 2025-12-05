@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maison des Fées - Forest Academy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/forest.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .full-page-image {
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+    .content-overlay {
+      position: relative;
+      z-index: 10;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+      box-sizing: border-box;
+    }
+    .text-content {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px 40px;
+      border-radius: 20px;
+      max-width: 800px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      font-size: 1.2rem;
+      line-height: 1.8;
+      color: #333;
+      min-height: 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .navigation-buttons {
+      display: flex;
+      gap: 20px;
+      margin-top: 30px;
+    }
+    .nav-btn {
+      padding: 12px 30px;
+      background-color: #2d8a47;
+      color: white;
+      font-weight: bold;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: 0.2s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .nav-btn:hover:not(:disabled) {
+      background-color: #256f39;
+      transform: scale(1.05);
+    }
+    .nav-btn:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+    .hidden {
+      display: none;
+    }
+    .character-name {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #2d8a47;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <img src="assets/images/fee-text.png" alt="Maison des Fées" class="full-page-image">
+  
+  <div class="content-overlay">
+    <!-- Partie 1 : Introduction -->
+    <div id="part-1" class="text-content">
+      <div class="character-name">👋 Libéria, la fée des logiciels libres</div>
+      <p>« Salut, humain curieux ! Je suis Libéria, la fée des logiciels libres !</p>
+      <p>Tu connais sûrement des logiciels très connus… mais souvent payants, fermés, et qui gardent leurs secrets bien cachés.</p>
+      <p>Moi, je vais te montrer qu'il existe des logiciels libres, que tout le monde peut utiliser, modifier et partager.</p>
+      <p>C'est un peu comme une recette de cuisine qu'on partage au lieu de la garder dans un coffre-fort 🧁 ! »</p>
+    </div>
+
+    <!-- Partie 2 : Pourquoi c'est important -->
+    <div id="part-2" class="text-content hidden">
+      <div class="character-name">✨ Pourquoi les logiciels libres ?</div>
+      <p>« Les logiciels libres, c'est important pour plusieurs raisons :</p>
+      <ul style="text-align: left; margin: 20px 0;">
+        <li>Tu peux les utiliser gratuitement (souvent).</li>
+        <li>Tu peux voir comment ils sont faits, et même les améliorer.</li>
+        <li>La communauté peut corriger des bugs et ajouter des fonctionnalités.</li>
+        <li>Tu ne dépends pas d'une seule grosse entreprise.</li>
+      </ul>
+      <p>Prêt·e à rejoindre le monde des fées du logiciel libre ? On va voir si tu reconnais les bons équivalents ! »</p>
+    </div>
+
+    <!-- Mini-cours : Qu'est-ce qu'un logiciel propriétaire -->
+    <div id="part-3" class="text-content hidden">
+      <div class="character-name">📚 Qu'est-ce qu'un logiciel propriétaire ?</div>
+      <p>« Un logiciel propriétaire, c'est un logiciel dont le code est fermé. Tu ne peux pas voir comment il fonctionne, tu dois accepter une licence, et souvent payer pour l'utiliser. »</p>
+    </div>
+
+    <!-- Mini-cours : Qu'est-ce qu'un logiciel libre -->
+    <div id="part-4" class="text-content hidden">
+      <div class="character-name">📚 Qu'est-ce qu'un logiciel libre ?</div>
+      <p>« Un logiciel libre respecte 4 libertés : utiliser, étudier, modifier, partager. Ça ne veut pas forcément dire gratuit, mais très souvent c'est le cas. »</p>
+    </div>
+
+    <!-- Mini-cours : Pourquoi c'est intéressant -->
+    <div id="part-5" class="text-content hidden">
+      <div class="character-name">📚 Pourquoi c'est intéressant ?</div>
+      <p>« Avec les logiciels libres, on peut éviter de dépendre d'une seule entreprise, on peut adapter le logiciel à ses besoins, et on participe à une communauté qui partage au lieu de garder pour soi. »</p>
+    </div>
+
+    <!-- Mini-cours : Exemples concrets -->
+    <div id="part-6" class="text-content hidden">
+      <div class="character-name">📚 Exemples concrets</div>
+      <p>« Tu connais peut-être Word, Photoshop, Zoom… Eh bien il existe LibreOffice, GIMP, Jitsi, et plein d'autres amis libres ! »</p>
+    </div>
+
+    <!-- Partie 7 : Explication du jeu -->
+    <div id="part-7" class="text-content hidden">
+      <div class="character-name">🎮 Le jeu</div>
+      <p>« Dans le jeu qui arrive, tu verras des logiciels propriétaires (souvent payants) d'un côté, et tu devras les associer à leur équivalent libre.</p>
+      <p>Glisse les étiquettes ou clique sur les bonnes paires pour aider moi et mes amis à libérer le code ! ✨ »</p>
+    </div>
+
+    <!-- Partie 8 : Le jeu d'association -->
+    <div id="part-8" class="text-content hidden" style="max-width: 1000px; min-height: 500px;">
+      <div class="character-name">🎮 Jeu d'association</div>
+      <div id="game-container" style="margin-top: 20px;">
+        <p style="margin-bottom: 20px;">Associe chaque logiciel propriétaire à son équivalent libre :</p>
+        <div id="game-area" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; width: 100%;">
+          <!-- Les cartes seront générées par JavaScript -->
+        </div>
+        <div id="game-feedback" style="margin-top: 20px; font-weight: bold;"></div>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="navigation-buttons">
+      <button id="btn-prev" class="nav-btn" onclick="previousPart()" disabled>← Précédent</button>
+      <button id="btn-next" class="nav-btn" onclick="nextPart()">Suivant →</button>
+      <button id="btn-start-game" class="nav-btn hidden" onclick="startGame()">Commencer le jeu</button>
+    </div>
+  </div>
+
+  <a href="foret.html" class="btn-explorer" style="position: fixed; bottom: 20px; right: 20px; z-index: 20;">Retour à la forêt</a>
+
+  <script>
+    let currentPart = 1;
+    const totalParts = 8;
+
+    // Données du jeu
+    const gamePairs = [
+      { "proprietaire": "Microsoft Word", "libre": "LibreOffice Writer" },
+      { "proprietaire": "Microsoft Excel", "libre": "LibreOffice Calc" },
+      { "proprietaire": "Microsoft PowerPoint", "libre": "LibreOffice Impress" },
+      { "proprietaire": "Adobe Photoshop", "libre": "GIMP" },
+      { "proprietaire": "Adobe Illustrator", "libre": "Inkscape" },
+      { "proprietaire": "Microsoft Windows", "libre": "GNU/Linux (Ubuntu…)" },
+      { "proprietaire": "Zoom", "libre": "Jitsi Meet" },
+      { "proprietaire": "Google Drive", "libre": "Nextcloud" }
+    ];
+
+    let selectedProprietaire = null;
+    let selectedLibre = null;
+    let matchedPairs = [];
+    let currentGamePairs = [];
+
+    function showPart(partNumber) {
+      // Cacher toutes les parties
+      for (let i = 1; i <= totalParts; i++) {
+        document.getElementById(`part-${i}`).classList.add('hidden');
+      }
+      
+      // Afficher la partie actuelle
+      document.getElementById(`part-${currentPart}`).classList.remove('hidden');
+      
+      // Gérer les boutons
+      document.getElementById('btn-prev').disabled = currentPart === 1;
+      document.getElementById('btn-next').classList.toggle('hidden', currentPart >= totalParts - 1);
+      document.getElementById('btn-start-game').classList.toggle('hidden', currentPart !== totalParts - 1);
+      
+      // Si on arrive au jeu, l'initialiser
+      if (currentPart === totalParts) {
+        initGame();
+      }
+    }
+
+    function nextPart() {
+      if (currentPart < totalParts) {
+        currentPart++;
+        showPart(currentPart);
+      }
+    }
+
+    function previousPart() {
+      if (currentPart > 1) {
+        currentPart--;
+        showPart(currentPart);
+      }
+    }
+
+    function startGame() {
+      currentPart = totalParts;
+      showPart(currentPart);
+    }
+
+    function initGame() {
+      // Sélectionner 5-8 paires au hasard
+      const shuffled = [...gamePairs].sort(() => Math.random() - 0.5);
+      currentGamePairs = shuffled.slice(0, Math.min(6, shuffled.length));
+      
+      // Mélanger les logiciels libres avec leur index original
+      const libresWithIndex = currentGamePairs.map((p, idx) => ({ text: p.libre, originalIndex: idx }));
+      libresWithIndex.sort(() => Math.random() - 0.5);
+      const proprietaires = currentGamePairs.map(p => p.proprietaire);
+      
+      matchedPairs = [];
+      selectedProprietaire = null;
+      selectedLibre = null;
+      
+      // Afficher les cartes
+      const gameArea = document.getElementById('game-area');
+      gameArea.innerHTML = '';
+      
+      // Colonne gauche : logiciels propriétaires
+      const leftCol = document.createElement('div');
+      leftCol.style.cssText = `
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        flex: 1;
+        min-width: 0;
+      `;
+      proprietaires.forEach((prop, index) => {
+        const card = createCard(prop, 'proprietaire', index);
+        leftCol.appendChild(card);
+      });
+      
+      // Colonne droite : logiciels libres
+      const rightCol = document.createElement('div');
+      rightCol.style.cssText = `
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        flex: 1;
+        min-width: 0;
+      `;
+      libresWithIndex.forEach((item, displayIndex) => {
+        const card = createCard(item.text, 'libre', item.originalIndex);
+        card.dataset.displayIndex = displayIndex; // Index d'affichage pour référence
+        rightCol.appendChild(card);
+      });
+      
+      gameArea.appendChild(leftCol);
+      gameArea.appendChild(rightCol);
+      
+      document.getElementById('game-feedback').textContent = '';
+    }
+
+    function createCard(text, type, index) {
+      const card = document.createElement('div');
+      card.className = 'game-card';
+      card.textContent = text;
+      card.dataset.index = index;
+      card.dataset.type = type;
+      // Calculer la taille de police adaptative basée sur la longueur du texte
+      const textLength = text.length;
+      let fontSize = '0.9rem';
+      if (textLength > 30) {
+        fontSize = '0.75rem';
+      } else if (textLength > 20) {
+        fontSize = '0.85rem';
+      }
+      
+      // Couleur initiale
+      let bgColor = matchedPairs.includes(index) ? '#90EE90' : '#fff';
+      let borderColor = '#ddd';
+      if (selectedProprietaire === index && type === 'proprietaire') {
+        borderColor = '#2d8a47';
+      } else if (selectedLibre === index && type === 'libre') {
+        borderColor = '#2d8a47';
+      }
+      
+      card.style.cssText = `
+        padding: 12px 10px;
+        background: ${bgColor};
+        border: 3px solid ${borderColor};
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: bold;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 60px;
+        max-height: 100px;
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        font-size: ${fontSize};
+        line-height: 1.2;
+      `;
+      
+      card.onclick = () => selectCard(index, type);
+      card.onmouseenter = () => {
+        if (!matchedPairs.includes(index)) {
+          card.style.transform = 'scale(1.05)';
+          card.style.boxShadow = '0 6px 12px rgba(0,0,0,0.2)';
+        }
+      };
+      card.onmouseleave = () => {
+        if (!matchedPairs.includes(index)) {
+          card.style.transform = 'scale(1)';
+          card.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+        }
+      };
+      
+      return card;
+    }
+
+    function selectCard(index, type) {
+      if (matchedPairs.includes(index)) return;
+      
+      // Si on clique sur une carte déjà sélectionnée, on la désélectionne
+      if (type === 'proprietaire' && selectedProprietaire === index) {
+        selectedProprietaire = null;
+        refreshCards();
+        return;
+      }
+      if (type === 'libre' && selectedLibre === index) {
+        selectedLibre = null;
+        refreshCards();
+        return;
+      }
+      
+      // Sélectionner la carte
+      if (type === 'proprietaire') {
+        selectedProprietaire = index;
+        selectedLibre = null; // Réinitialiser la sélection libre si on change de propriétaire
+      } else {
+        selectedLibre = index;
+      }
+      
+      refreshCards();
+      
+      // Vérifier si on a une paire complète
+      if (selectedProprietaire !== null && selectedLibre !== null) {
+        // selectedLibre est maintenant l'index original dans currentGamePairs
+        const propText = currentGamePairs[selectedProprietaire].proprietaire;
+        const libreText = currentGamePairs[selectedLibre].libre;
+        const pair = currentGamePairs.find(p => p.proprietaire === propText && p.libre === libreText);
+        
+        if (pair) {
+          // Bonne association : les deux cartes deviennent vertes et restent vertes
+          matchedPairs.push(selectedProprietaire, selectedLibre);
+          document.getElementById('game-feedback').textContent = '✅ Bonne association !';
+          document.getElementById('game-feedback').style.color = '#2d8a47';
+          selectedProprietaire = null;
+          selectedLibre = null;
+          refreshCards();
+          
+          // Vérifier si le jeu est terminé
+          if (matchedPairs.length === currentGamePairs.length * 2) {
+            setTimeout(() => {
+              document.getElementById('game-feedback').textContent = '🎉 Félicitations ! Tu as terminé le jeu !';
+              document.getElementById('game-feedback').style.color = '#2d8a47';
+            }, 500);
+          }
+        } else {
+          // Mauvaise association : les deux cartes deviennent rouges pendant 3 secondes
+          document.getElementById('game-feedback').textContent = '❌ Ce n\'est pas la bonne association. Réessaye !';
+          document.getElementById('game-feedback').style.color = '#d32f2f';
+          
+          // Marquer temporairement les cartes comme incorrectes (avec leurs types)
+          const tempWrong = [
+            { index: selectedProprietaire, type: 'proprietaire' },
+            { index: selectedLibre, type: 'libre' }
+          ];
+          refreshCards(true, tempWrong);
+          
+          setTimeout(() => {
+            selectedProprietaire = null;
+            selectedLibre = null;
+            document.getElementById('game-feedback').textContent = '';
+            refreshCards();
+          }, 3000);
+        }
+      }
+    }
+    
+    function refreshCards(isWrong = false, wrongCards = []) {
+      const gameArea = document.getElementById('game-area');
+      const cards = gameArea.querySelectorAll('.game-card');
+      
+      cards.forEach((card) => {
+        const index = parseInt(card.dataset.index);
+        const type = card.dataset.type;
+        
+        let bgColor = '#fff';
+        let borderColor = '#ddd';
+        
+        // Si c'est une mauvaise association, vérifier si cette carte correspond
+        let isWrongCard = false;
+        if (isWrong && wrongCards.length > 0) {
+          isWrongCard = wrongCards.some(wc => wc.index === index && wc.type === type);
+        }
+        
+        if (isWrongCard) {
+          bgColor = '#ffcccc'; // Rouge pour les mauvaises associations temporaires
+          borderColor = '#d32f2f';
+        } else if (matchedPairs.includes(index)) {
+          bgColor = '#90EE90'; // Vert pour les bonnes associations
+          borderColor = '#2d8a47';
+        } else if (selectedProprietaire === index && type === 'proprietaire') {
+          borderColor = '#2d8a47';
+        } else if (selectedLibre === index && type === 'libre') {
+          borderColor = '#2d8a47';
+        }
+        
+        card.style.background = bgColor;
+        card.style.borderColor = borderColor;
+      });
+    }
+
+    // Initialisation
+    showPart(1);
+  </script>
+</body>
+</html>

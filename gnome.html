@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maison des Gnomes - Forest Academy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/forest.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .full-page-image {
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+    .content-overlay {
+      position: relative;
+      z-index: 10;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .text-content {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 20px 25px;
+      border-radius: 15px;
+      max-width: 800px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #333;
+      min-height: 200px;
+      max-height: 85vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .navigation-buttons {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+    .nav-btn {
+      padding: 10px 20px;
+      background-color: #2d8a47;
+      color: white;
+      font-weight: bold;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: 0.2s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .nav-btn:hover:not(:disabled) {
+      background-color: #256f39;
+      transform: scale(1.05);
+    }
+    .nav-btn:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+    .hidden {
+      display: none;
+    }
+    .character-name {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #2d8a47;
+      margin-bottom: 10px;
+    }
+    .category-box {
+      padding: 12px;
+      border: 2px dashed #ddd;
+      border-radius: 10px;
+      min-height: 80px;
+      background: #f9f9f9;
+      margin-bottom: 10px;
+    }
+    .category-box.drag-over {
+      border-color: #2d8a47;
+      background: #e8f5e9;
+    }
+    .situation-card {
+      padding: 10px;
+      background: #fff;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      cursor: move;
+      transition: all 0.3s;
+      font-size: 0.9rem;
+      line-height: 1.3;
+    }
+    .situation-card:hover {
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transform: translateY(-2px);
+    }
+    .situation-card.dragging {
+      opacity: 0.5;
+    }
+  </style>
+</head>
+<body>
+  <img src="assets/images/gnome-text.png" alt="Maison des Gnomes" class="full-page-image">
+  
+  <div class="content-overlay">
+    <!-- Partie 1 : Introduction -->
+    <div id="part-1" class="text-content">
+      <div class="character-name">🌱 Durabilis, le gnome bricoleur du numérique</div>
+      <p>« Grmph… oh ! Bonjour ! Je suis Durabilis, le gnome bricoleur du numérique 🌱.</p>
+      <p>Tu crois que les ordis, téléphones et tablettes poussent sur les arbres ? Pas du tout ! Ils consomment beaucoup de ressources et d'énergie.</p>
+      <p>Mon travail, c'est de prolonger leur vie et éviter le gaspillage. »</p>
+    </div>
+
+    <!-- Partie 2 : Atelier -->
+    <div id="part-2" class="text-content hidden">
+      <div class="character-name">🔧 Mon atelier</div>
+      <p>« Dans mon atelier, chaque objet cassé ou inutile a une seconde chance : on peut le réparer, le réutiliser, ou le recycler. Et parfois… on peut juste éviter de l'acheter ! »</p>
+    </div>
+
+    <!-- Partie 3 : Explication du jeu -->
+    <div id="part-3" class="text-content hidden">
+      <div class="character-name">🎮 Le jeu</div>
+      <p>« Dans le jeu, tu verras des situations : un écran cassé, un vieux téléphone, un chargeur en trop…</p>
+      <p>À toi de décider : on répare, on réutilise / réemploie, on recycle, ou on réduit/refuse ? »</p>
+    </div>
+
+    <!-- Mini-cours : Réparer -->
+    <div id="part-4" class="text-content hidden">
+      <div class="character-name">🔧 Réparer</div>
+      <p>« Réparer, c'est prolonger la vie de l'objet : changer une batterie, un écran, un clavier… C'est souvent la meilleure solution. »</p>
+    </div>
+
+    <!-- Mini-cours : Réutiliser -->
+    <div id="part-5" class="text-content hidden">
+      <div class="character-name">♻️ Réutiliser / Réemployer</div>
+      <p>« Quand toi tu n'en as plus besoin, quelqu'un d'autre peut encore s'en servir : donner, revendre, prêter, upcycler. »</p>
+    </div>
+
+    <!-- Mini-cours : Recycler -->
+    <div id="part-6" class="text-content hidden">
+      <div class="character-name">♻️ Recycler</div>
+      <p>« Recycler, c'est démonter l'objet pour récupérer les matériaux. C'est mieux que de jeter, mais ça consomme aussi de l'énergie. »</p>
+    </div>
+
+    <!-- Mini-cours : Réduire -->
+    <div id="part-7" class="text-content hidden">
+      <div class="character-name">🌱 Réduire / Refuser</div>
+      <p>« Le geste le plus écologique, c'est parfois de ne pas acheter : garder son téléphone plus longtemps, éviter les doublons, limiter les gadgets inutiles. »</p>
+    </div>
+
+    <!-- Partie 8 : Le jeu de tri -->
+    <div id="part-8" class="text-content hidden" style="max-width: 1000px; max-height: 90vh; overflow-y: auto;">
+      <div class="character-name">🎮 Jeu de tri</div>
+      <div id="game-container" style="margin-top: 10px;">
+        <p style="margin-bottom: 10px; font-size: 0.9rem;">Glisse chaque situation dans la bonne catégorie :</p>
+        
+        <!-- Zone des situations -->
+        <div id="situations-area" style="margin-bottom: 15px;">
+          <h3 style="margin-bottom: 8px; color: #2d8a47; font-size: 1rem;">Situations à classer :</h3>
+          <div id="situations-list"></div>
+        </div>
+
+        <!-- Catégories -->
+        <div id="categories-area" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div class="category-box" data-category="reparer">
+            <h3 style="color: #2d8a47; margin-bottom: 5px; font-size: 0.95rem;">🔧 Réparer</h3>
+            <div class="category-content"></div>
+          </div>
+          <div class="category-box" data-category="reutiliser">
+            <h3 style="color: #2d8a47; margin-bottom: 5px; font-size: 0.95rem;">♻️ Réutiliser</h3>
+            <div class="category-content"></div>
+          </div>
+          <div class="category-box" data-category="recycler">
+            <h3 style="color: #2d8a47; margin-bottom: 5px; font-size: 0.95rem;">♻️ Recycler</h3>
+            <div class="category-content"></div>
+          </div>
+          <div class="category-box" data-category="reduire">
+            <h3 style="color: #2d8a47; margin-bottom: 5px; font-size: 0.95rem;">🌱 Réduire</h3>
+            <div class="category-content"></div>
+          </div>
+        </div>
+        
+        <div id="game-feedback" style="margin-top: 10px; font-weight: bold; font-size: 0.9rem;"></div>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="navigation-buttons">
+      <button id="btn-prev" class="nav-btn" onclick="previousPart()" disabled>← Précédent</button>
+      <button id="btn-next" class="nav-btn" onclick="nextPart()">Suivant →</button>
+      <button id="btn-start-game" class="nav-btn hidden" onclick="startGame()">Commencer le jeu</button>
+    </div>
+  </div>
+
+  <a href="foret.html" class="btn-explorer" style="position: fixed; bottom: 20px; right: 20px; z-index: 20;">Retour à la forêt</a>
+
+  <script>
+    let currentPart = 1;
+    const totalParts = 8;
+
+    // Données du jeu
+    const gameSituations = [
+      { "situation": "L'écran de mon ordinateur portable est fissuré mais tout le reste fonctionne.", "categorie": "reparer" },
+      { "situation": "Mon smartphone marche encore, mais j'en veux un nouveau plus à la mode.", "categorie": "reduire" },
+      { "situation": "J'ai un vieux téléphone qui fonctionne, mais je n'en ai plus l'utilité.", "categorie": "reutiliser" },
+      { "situation": "Mon chargeur est cassé et dénudé, dangereux à utiliser.", "categorie": "recycler" },
+      { "situation": "J'ai 3 câbles HDMI identiques, mais je n'en utilise qu'un seul.", "categorie": "reutiliser" },
+      { "situation": "La batterie de mon téléphone tient très mal, le reste est en bon état.", "categorie": "reparer" },
+      { "situation": "Mon écran ne s'allume plus du tout, même après diagnostic.", "categorie": "recycler" },
+      { "situation": "Je veux changer d'ordinateur juste pour avoir une nouvelle couleur.", "categorie": "reduire" }
+    ];
+
+    let currentGameSituations = [];
+    let placedSituations = {};
+
+    function showPart(partNumber) {
+      for (let i = 1; i <= totalParts; i++) {
+        document.getElementById(`part-${i}`).classList.add('hidden');
+      }
+      
+      document.getElementById(`part-${currentPart}`).classList.remove('hidden');
+      
+      document.getElementById('btn-prev').disabled = currentPart === 1;
+      document.getElementById('btn-next').classList.toggle('hidden', currentPart >= totalParts - 1);
+      document.getElementById('btn-start-game').classList.toggle('hidden', currentPart !== totalParts - 1);
+      
+      if (currentPart === totalParts) {
+        initGame();
+      }
+    }
+
+    function nextPart() {
+      if (currentPart < totalParts) {
+        currentPart++;
+        showPart(currentPart);
+      }
+    }
+
+    function previousPart() {
+      if (currentPart > 1) {
+        currentPart--;
+        showPart(currentPart);
+      }
+    }
+
+    function startGame() {
+      currentPart = totalParts;
+      showPart(currentPart);
+    }
+
+    function initGame() {
+      // Sélectionner 6 situations au hasard
+      const shuffled = [...gameSituations].sort(() => Math.random() - 0.5);
+      currentGameSituations = shuffled.slice(0, Math.min(6, shuffled.length));
+      placedSituations = {};
+      
+      // Afficher les situations
+      const situationsList = document.getElementById('situations-list');
+      situationsList.innerHTML = '';
+      
+      currentGameSituations.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'situation-card';
+        card.textContent = item.situation;
+        card.draggable = true;
+        card.dataset.index = index;
+        card.dataset.correctCategory = item.categorie;
+        
+        card.addEventListener('dragstart', handleDragStart);
+        card.addEventListener('dragend', handleDragEnd);
+        
+        situationsList.appendChild(card);
+      });
+      
+      // Vider les catégories
+      document.querySelectorAll('.category-content').forEach(div => {
+        div.innerHTML = '';
+      });
+      
+      // Configurer les zones de dépôt
+      document.querySelectorAll('.category-box').forEach(box => {
+        box.addEventListener('dragover', handleDragOver);
+        box.addEventListener('drop', handleDrop);
+        box.addEventListener('dragleave', handleDragLeave);
+      });
+      
+      document.getElementById('game-feedback').textContent = '';
+    }
+
+    let draggedElement = null;
+
+    function handleDragStart(e) {
+      draggedElement = this;
+      this.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    }
+
+    function handleDragEnd(e) {
+      this.classList.remove('dragging');
+      document.querySelectorAll('.category-box').forEach(box => {
+        box.classList.remove('drag-over');
+      });
+    }
+
+    function handleDragOver(e) {
+      if (e.preventDefault) {
+        e.preventDefault();
+      }
+      this.classList.add('drag-over');
+      e.dataTransfer.dropEffect = 'move';
+      return false;
+    }
+
+    function handleDragLeave(e) {
+      this.classList.remove('drag-over');
+    }
+
+    function handleDrop(e) {
+      if (e.stopPropagation) {
+        e.stopPropagation();
+      }
+      
+      this.classList.remove('drag-over');
+      
+      if (draggedElement) {
+        const index = parseInt(draggedElement.dataset.index);
+        const correctCategory = draggedElement.dataset.correctCategory;
+        const droppedCategory = this.dataset.category;
+        const categoryContent = this.querySelector('.category-content');
+        
+        // Retirer la carte de sa position actuelle
+        if (placedSituations[index]) {
+          const oldCategory = document.querySelector(`[data-category="${placedSituations[index]}"] .category-content`);
+          oldCategory.removeChild(draggedElement);
+        } else {
+          draggedElement.remove();
+        }
+        
+        // Ajouter à la nouvelle catégorie
+        categoryContent.appendChild(draggedElement);
+        placedSituations[index] = droppedCategory;
+        
+        // Vérifier si c'est correct
+        if (correctCategory === droppedCategory) {
+          draggedElement.style.background = '#90EE90';
+          draggedElement.style.borderColor = '#2d8a47';
+        } else {
+          draggedElement.style.background = '#ffcccc';
+          draggedElement.style.borderColor = '#d32f2f';
+          setTimeout(() => {
+            // Remettre la carte dans la liste des situations
+            const situationsList = document.getElementById('situations-list');
+            draggedElement.style.background = '#fff';
+            draggedElement.style.borderColor = '#ddd';
+            situationsList.appendChild(draggedElement);
+            delete placedSituations[index];
+          }, 2000);
+        }
+        
+        // Vérifier si toutes les situations sont placées correctement
+        checkGameComplete();
+      }
+      
+      return false;
+    }
+
+    function checkGameComplete() {
+      const allPlaced = Object.keys(placedSituations).length === currentGameSituations.length;
+      if (allPlaced) {
+        const allCorrect = currentGameSituations.every((item, index) => {
+          return placedSituations[index] === item.categorie;
+        });
+        
+        if (allCorrect) {
+          document.getElementById('game-feedback').textContent = '🎉 Félicitations ! Tu as bien classé toutes les situations !';
+          document.getElementById('game-feedback').style.color = '#2d8a47';
+        }
+      }
+    }
+
+    // Initialisation
+    showPart(1);
+  </script>
+</body>
+</html>

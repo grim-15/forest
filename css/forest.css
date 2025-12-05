@@ -21,3 +21,35 @@
   background-color: #256f39;
   transform: scale(1.05);
 }
+
+/* --- Liens des maisons --- */
+a[href*="fee.html"],
+a[href*="elf.html"],
+a[href*="gnome.html"],
+a[href*="dragon.html"] {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  text-decoration: none;
+}
+
+a[href*="fee.html"]:hover,
+a[href*="elf.html"]:hover,
+a[href*="gnome.html"]:hover,
+a[href*="dragon.html"]:hover {
+  transform: scale(1.1);
+}
+
+a[href*="fee.html"] img,
+a[href*="elf.html"] img,
+a[href*="gnome.html"] img,
+a[href*="dragon.html"] img {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+a[href*="fee.html"]:hover img,
+a[href*="elf.html"]:hover img,
+a[href*="gnome.html"]:hover img,
+a[href*="dragon.html"]:hover img {
+  transform: scale(1.15);
+}

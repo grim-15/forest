@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maison des Dragons - Forest Academy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/forest.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .full-page-image {
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+    .content-overlay {
+      position: relative;
+      z-index: 10;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .text-content {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 20px 25px;
+      border-radius: 15px;
+      max-width: 800px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #333;
+      min-height: 200px;
+      max-height: 85vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .navigation-buttons {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+    .nav-btn {
+      padding: 10px 20px;
+      background-color: #2d8a47;
+      color: white;
+      font-weight: bold;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: 0.2s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .nav-btn:hover:not(:disabled) {
+      background-color: #256f39;
+      transform: scale(1.05);
+    }
+    .nav-btn:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+    .hidden {
+      display: none;
+    }
+    .character-name {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #2d8a47;
+      margin-bottom: 10px;
+    }
+    .qcm-question {
+      text-align: left;
+      margin: 15px 0;
+    }
+    .qcm-option {
+      padding: 12px;
+      margin: 8px 0;
+      background: #fff;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 0.9rem;
+    }
+    .qcm-option:hover {
+      background: #f0f0f0;
+      border-color: #2d8a47;
+    }
+    .qcm-option.selected {
+      background: #e8f5e9;
+      border-color: #2d8a47;
+    }
+    .qcm-option.correct {
+      background: #90EE90;
+      border-color: #2d8a47;
+    }
+    .qcm-option.incorrect {
+      background: #ffcccc;
+      border-color: #d32f2f;
+    }
+  </style>
+</head>
+<body>
+  <img src="assets/images/dragon-text.png" alt="Maison des Dragons" class="full-page-image">
+  
+  <div class="content-overlay">
+    <!-- Partie 1 : Introduction -->
+    <div id="part-1" class="text-content">
+      <div class="character-name">🐉 Inclusionis, le dragon de l'inclusion numérique</div>
+      <p>« Raaaar… ne t'inquiète pas, je ne crache pas le feu sur les visiteurs ! Je suis Inclusionis, le dragon de l'inclusion numérique 🐉.</p>
+      <p>Mon trésor, ce ne sont pas des pièces d'or, mais des outils pour que tout le monde puisse utiliser le numérique : personnes âgées, personnes en situation de handicap, débutants, experts… »</p>
+    </div>
+
+    <!-- Partie 2 : Accessibilité -->
+    <div id="part-2" class="text-content hidden">
+      <div class="character-name">♿ Accessibilité pour tous</div>
+      <p>« Un site, une application ou un document doit être compréhensible, lisible et utilisable par le plus grand nombre.</p>
+      <p>Dans le jeu, je vais te montrer des situations problématiques. À toi de deviner où est le problème d'inclusion grâce à un QCM. »</p>
+    </div>
+
+    <!-- Partie 3 : Explication du jeu -->
+    <div id="part-3" class="text-content hidden">
+      <div class="character-name">🎮 Le jeu</div>
+      <p>« Ouvre l'œil : texte illisible, couleurs mal choisies, pas de sous-titres, langage trop compliqué… Tu devras trouver ce qui empêche certaines personnes d'accéder au contenu. »</p>
+    </div>
+
+    <!-- Mini-cours : Contraste & lisibilité -->
+    <div id="part-4" class="text-content hidden">
+      <div class="character-name">👁️ Contraste & lisibilité</div>
+      <p>« Un texte gris clair sur fond blanc, c'est difficile à lire, surtout pour les personnes malvoyantes. »</p>
+    </div>
+
+    <!-- Mini-cours : Taille des caractères -->
+    <div id="part-5" class="text-content hidden">
+      <div class="character-name">📏 Taille des caractères et clics</div>
+      <p>« Des caractères trop petits, des boutons minuscules… tout le monde n'a pas une vue d'aigle ni une souris ultra précise. »</p>
+    </div>
+
+    <!-- Mini-cours : Sous-titres et alternatives -->
+    <div id="part-6" class="text-content hidden">
+      <div class="character-name">🎬 Sous-titres et alternatives</div>
+      <p>« Les vidéos devraient avoir des sous-titres, les images un texte alternatif, pour les personnes qui ne voient pas ou n'entendent pas bien. »</p>
+    </div>
+
+    <!-- Mini-cours : Langage clair -->
+    <div id="part-7" class="text-content hidden">
+      <div class="character-name">📝 Langage clair</div>
+      <p>« Le jargon compliqué exclut les personnes peu à l'aise avec le numérique ou la langue. »</p>
+    </div>
+
+    <!-- Partie 8 : Le jeu QCM -->
+    <div id="part-8" class="text-content hidden" style="max-width: 900px; max-height: 90vh; overflow-y: auto;">
+      <div class="character-name">🎮 Jeu QCM</div>
+      <div id="game-container" style="margin-top: 10px;">
+        <div id="qcm-question-container">
+          <!-- Le QCM sera généré ici -->
+        </div>
+        <div id="game-feedback" style="margin-top: 15px; font-weight: bold; font-size: 0.9rem;"></div>
+        <button id="btn-next-question" class="nav-btn hidden" onclick="nextQuestion()" style="margin-top: 15px;">Question suivante</button>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="navigation-buttons">
+      <button id="btn-prev" class="nav-btn" onclick="previousPart()" disabled>← Précédent</button>
+      <button id="btn-next" class="nav-btn" onclick="nextPart()">Suivant →</button>
+      <button id="btn-start-game" class="nav-btn hidden" onclick="startGame()">Commencer le jeu</button>
+    </div>
+  </div>
+
+  <a href="foret.html" class="btn-explorer" style="position: fixed; bottom: 20px; right: 20px; z-index: 20;">Retour à la forêt</a>
+
+  <script>
+    let currentPart = 1;
+    const totalParts = 8;
+
+    // Données du jeu QCM
+    const gameQuestions = [
+      {
+        "contexte": "Sur un site web, le texte des menus est écrit en gris très clair sur un fond blanc. Une personne malvoyante n'arrive pas à lire les options.",
+        "question": "Où est le problème principal ?",
+        "propositions": [
+          "Le site ne charge pas assez vite",
+          "Les contrastes de couleur sont trop faibles",
+          "Il n'y a pas de logo",
+          "Le menu n'a pas assez d'options"
+        ],
+        "bonne_reponse_index": 1
+      },
+      {
+        "contexte": "Une vidéo explique comment utiliser une application, mais il n'y a pas de sous-titres ni de transcription. Une personne sourde ne comprend pas le contenu.",
+        "question": "Qu'est-ce qui manque pour rendre cette vidéo plus inclusive ?",
+        "propositions": [
+          "Une musique de fond plus forte",
+          "Des sous-titres ou une transcription écrite",
+          "Un fond d'écran plus coloré",
+          "Une vitesse de lecture plus rapide"
+        ],
+        "bonne_reponse_index": 1
+      },
+      {
+        "contexte": "Un formulaire en ligne utilise uniquement la couleur pour indiquer les erreurs : les champs incorrects deviennent rouges, mais il n'y a pas de message texte.",
+        "question": "Quel est le problème ?",
+        "propositions": [
+          "Les champs sont trop longs",
+          "Les personnes daltoniennes peuvent ne pas distinguer la couleur rouge",
+          "Le formulaire demande trop d'informations",
+          "Le site n'a pas d'images"
+        ],
+        "bonne_reponse_index": 1
+      },
+      {
+        "contexte": "Une application n'est utilisable qu'à la souris : on ne peut pas naviguer au clavier, et les boutons sont très petits.",
+        "question": "Pourquoi cette application n'est-elle pas inclusive ?",
+        "propositions": [
+          "Parce qu'elle n'a pas de thème sombre",
+          "Parce qu'elle ne propose pas de sons",
+          "Parce qu'elle est difficile à utiliser pour les personnes ayant des difficultés motrices ou qui utilisent uniquement le clavier",
+          "Parce qu'elle utilise trop d'icônes"
+        ],
+        "bonne_reponse_index": 2
+      },
+      {
+        "contexte": "Une page d'aide explique comment se connecter en utilisant des phrases longues, des mots techniques compliqués et des abréviations non expliquées.",
+        "question": "Quel est le principal problème ?",
+        "propositions": [
+          "Le fond de la page est bleu",
+          "Le texte n'est pas assez technique",
+          "Le langage n'est pas clair et accessible",
+          "Il y a trop d'images"
+        ],
+        "bonne_reponse_index": 2
+      }
+    ];
+
+    let currentQuestionIndex = 0;
+    let selectedAnswer = null;
+    let score = 0;
+
+    function showPart(partNumber) {
+      for (let i = 1; i <= totalParts; i++) {
+        document.getElementById(`part-${i}`).classList.add('hidden');
+      }
+      
+      document.getElementById(`part-${currentPart}`).classList.remove('hidden');
+      
+      document.getElementById('btn-prev').disabled = currentPart === 1;
+      document.getElementById('btn-next').classList.toggle('hidden', currentPart >= totalParts - 1);
+      document.getElementById('btn-start-game').classList.toggle('hidden', currentPart !== totalParts - 1);
+      
+      if (currentPart === totalParts) {
+        initGame();
+      }
+    }
+
+    function nextPart() {
+      if (currentPart < totalParts) {
+        currentPart++;
+        showPart(currentPart);
+      }
+    }
+
+    function previousPart() {
+      if (currentPart > 1) {
+        currentPart--;
+        showPart(currentPart);
+      }
+    }
+
+    function startGame() {
+      currentPart = totalParts;
+      currentQuestionIndex = 0;
+      score = 0;
+      showPart(currentPart);
+    }
+
+    function initGame() {
+      currentQuestionIndex = 0;
+      selectedAnswer = null;
+      displayQuestion();
+    }
+
+    function displayQuestion() {
+      if (currentQuestionIndex >= gameQuestions.length) {
+        // Fin du jeu
+        const container = document.getElementById('qcm-question-container');
+        container.innerHTML = `
+          <div style="text-align: center; padding: 20px;">
+            <h3 style="color: #2d8a47; margin-bottom: 15px;">🎉 Félicitations !</h3>
+            <p>Tu as terminé le quiz !</p>
+            <p style="margin-top: 10px; font-size: 1.1rem; font-weight: bold;">Score : ${score} / ${gameQuestions.length}</p>
+          </div>
+        `;
+        document.getElementById('btn-next-question').classList.add('hidden');
+        return;
+      }
+
+      const question = gameQuestions[currentQuestionIndex];
+      const container = document.getElementById('qcm-question-container');
+      selectedAnswer = null;
+      
+      container.innerHTML = `
+        <div class="qcm-question">
+          <p style="background: #f0f0f0; padding: 15px; border-radius: 8px; margin-bottom: 15px; font-weight: bold;">
+            ${question.contexte}
+          </p>
+          <h3 style="color: #2d8a47; margin-bottom: 15px;">${question.question}</h3>
+          <div id="qcm-options">
+            ${question.propositions.map((prop, index) => `
+              <div class="qcm-option" data-index="${index}" onclick="selectAnswer(${index})">
+                ${String.fromCharCode(65 + index)}. ${prop}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+      
+      document.getElementById('game-feedback').textContent = '';
+      document.getElementById('btn-next-question').classList.add('hidden');
+    }
+
+    function selectAnswer(index) {
+      if (selectedAnswer !== null) return; // Déjà répondu
+      
+      selectedAnswer = index;
+      const question = gameQuestions[currentQuestionIndex];
+      const options = document.querySelectorAll('.qcm-option');
+      
+      options.forEach((opt, optIndex) => {
+        opt.classList.remove('selected', 'correct', 'incorrect');
+        if (optIndex === index) {
+          opt.classList.add('selected');
+        }
+      });
+      
+      // Vérifier la réponse
+      if (index === question.bonne_reponse_index) {
+        options[index].classList.remove('selected');
+        options[index].classList.add('correct');
+        document.getElementById('game-feedback').textContent = '✅ Bonne réponse !';
+        document.getElementById('game-feedback').style.color = '#2d8a47';
+        score++;
+      } else {
+        options[index].classList.remove('selected');
+        options[index].classList.add('incorrect');
+        options[question.bonne_reponse_index].classList.add('correct');
+        document.getElementById('game-feedback').textContent = `❌ Mauvaise réponse. La bonne réponse était : ${String.fromCharCode(65 + question.bonne_reponse_index)}. ${question.propositions[question.bonne_reponse_index]}`;
+        document.getElementById('game-feedback').style.color = '#d32f2f';
+      }
+      
+      // Désactiver les clics
+      options.forEach(opt => {
+        opt.style.cursor = 'not-allowed';
+        opt.onclick = null;
+      });
+      
+      // Afficher le bouton suivant
+      document.getElementById('btn-next-question').classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+      currentQuestionIndex++;
+      displayQuestion();
+    }
+
+    // Initialisation
+    showPart(1);
+  </script>
+</body>
+</html>
